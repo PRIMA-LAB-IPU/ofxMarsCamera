@@ -11,7 +11,7 @@ class MarsCamera: public ofThread {
     
     public:
         ofImage cameraImage; // カメラの画像
-        void setThreadExecuteTime(int time);
+        void setThreadExecuteTime(int time); // setThered~ -> connect -> setCamera~ -> openStreamの順なら問題ないと思う
         void connect();
         void setCameraValues(
             double gamma, 
@@ -25,11 +25,11 @@ class MarsCamera: public ofThread {
         void disConnect();
 
     private:
-        ofTimer timer;                          // スレッドの実行時
+        ofTimer timer;                          // スレッドの実行時間
         GENICAM_Camera *camera;                 // カメラのインスタンスのポインタ、
         GENICAM_System *system;                 // カメラの接続数の取得、接続、切断を司るシステムのインスタンス
         GENICAM_Camera *cameraList;             // APIでは接続してるカメラ全てが返ってくる
-        GENICAM_StreamSource *streamSource;     // 
+        GENICAM_StreamSource *streamSource;     // カメラからのデータ
         GENICAM_ISPControl *ispControl;         // ~Controlは各種設定、cameraインスタンスから作る
         GENICAM_AnalogControl *analogControl;
         GENICAM_AcquisitionControl *acquisitionControl;
