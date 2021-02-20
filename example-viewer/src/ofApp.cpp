@@ -58,11 +58,6 @@ void ofApp::draw() {
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key) {
-
-}
-
-//--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
 	screen.allocate(w, h);
 }
