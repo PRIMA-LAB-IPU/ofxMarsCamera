@@ -14,7 +14,7 @@ void ofApp::setup() {
 
 	cam.setGamma(1.0);
 	cam.setBrightness(100);
-	cam.setFPS(240);
+	cam.setFPS(800);
 
 	screen.allocate(ofGetWidth(), ofGetHeight());
 }
@@ -44,21 +44,7 @@ void ofApp::draw() {
 	if ((ofGetElapsedTimeMillis() - timer) > (1000 / 60)) {
 		screen.begin();
 		ofClear(0);
-		cv::drawMat(frameMat, 0, 0, screen.getWidth(), screen.getHeight());
-
-		ofPushMatrix();
-		ofTranslate(0, ofGetHeight() - 30);
-		if (frameCount.size() > 1) {
-			for (int i = 0; i < frameCount.size(); i++) {
-				float x = ((float)i / (float)frameCount.size()) * (float)screen.getWidth();
-				float h = screen.getWidth() / frameCount.size();
-				ofDrawRectangle(x, h * -1, h-2, h-2);
-				for (int j = 0; j < frameCount[i]; j++) {
-					ofDrawRectangle(x, h * -(j + 1), h-2, h-2);
-				}
-			}
-		}
-		ofPopMatrix();
+		ofxCv::drawMat(frameMat, 0, 0, screen.getWidth(), screen.getHeight());
 
 		ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()), 20, 20);
 		ofDrawBitmapStringHighlight(ofToString(cam.getFPS()), 20, 40);
