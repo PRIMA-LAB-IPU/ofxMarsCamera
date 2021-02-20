@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOpenCv.h"
+#include "ofxCv.h"
 #include "ofxMarsCamera.h"
 
 class ofApp : public ofBaseApp{
@@ -10,8 +12,6 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 		void exit();
-
-		void keyPressed(int key);
 		void windowResized(int w, int h);
 
 		cv::Mat frameMat;
