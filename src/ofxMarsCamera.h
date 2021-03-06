@@ -5,6 +5,7 @@
 #include "define.h"
 #include "IntTypes.h"
 #include "SDK.h"
+#include "ImageConvert.h"
 
 class MarsCamera : public ofThread {
 
@@ -51,8 +52,12 @@ private:
 
 	int imageWidth;
 	int imageHeight;
+
+	IMGCNV_SOpenParam frame_param;
 	GENICAM_Frame* frame;
-	unsigned char* imageBuffer;
+	unsigned char* imageRawBuffer;
+	unsigned char* imageBayerBuffer_filted;
+
 	cv::Mat frameMat;
 
 	void threadedFunction();

@@ -41,9 +41,22 @@ bool MarsCamera::update(GENICAM_Frame* frame, cv::Mat& frame_cv) {
 		return false;
 	}
 
-	uint32_t imageBufferSize = frame->getImageSize(frame);
-	memcpy(frame_cv.data, frame->getImage(frame), imageBufferSize);
-	
+	//Get Frame info
+	frame_param.dataSize = frame->getImageSize(frame);
+	frame_param.height = frame->getImageHeight(frame);
+	frame_param.width = frame->getImageWidth(frame);
+	frame_param.paddingX = frame->getImagePaddingX(frame);
+	frame_param.paddingY = frame->getImagePaddingY(frame);
+	frame_param.pixelForamt = frame->getImagePixelFormat(frame);
+
+	//Get YUYV Frame
+	memcpy(imageRawBuffer, frame->getImage(frame), frame_param.dataSize);
+
+    // YUYV ? to RGB
+	int nDataSize = 0;
+	IMGCNV_ConvertToBGR24(imageRawBuffer, &frame_param, imageBayerBuffer_filted, &nDataSize);
+	memcpy(frame_cv.data, imageBayerBuffer_filted, frame_param.dataSize * 3);
+	cv::cvtColor(frame_cv, frame_cv, cv::COLOR_BGR2RGB);
 
 	frameID++;
 	frame->release(frame);
@@ -59,8 +72,9 @@ void MarsCamera::openStream()
 		frameID = 0;
 
 		//Allocate
-		imageBuffer = new unsigned char[IMAGE_SIZE];
-		frameMat = cv::Mat(imageHeight, imageWidth, CV_8UC1, imageBuffer);
+		imageRawBuffer = new unsigned char[IMAGE_SIZE];
+		imageBayerBuffer_filted = new unsigned char[IMAGE_SIZE * 3];
+		frameMat = cv::Mat::zeros(cv::Size(imageWidth,imageHeight), CV_8UC3);
 
 		startCapture();
 		startThread();
