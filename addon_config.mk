@@ -17,10 +17,11 @@
 meta:
 	ADDON_NAME = ofxMarsCamera
 	ADDON_DESCRIPTION = Using MarsCamera for openFrameworks on Windows
-	ADDON_AUTHOR = @saccadic
-	ADDON_TAGS = "MarsCamera", "Camera"
-	ADDON_URL = https://github.com/saccadic/ofxMarsCamera
+	ADDON_AUTHOR = 
+	ADDON_TAGS = "MarsCamera"
+	ADDON_URL =
 
 vs:
 	ADDON_LIBS += MVSDKmd.lib
 	ADDON_LIBS += libs/GenICam/lib/vs/x64/Release/
+	ADDON_DATA += ImageConvert.dll
